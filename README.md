@@ -13,7 +13,7 @@ You can also view all our work in details in our website following this URL: [ht
 
 ## Contributors
 
-We would like to acknowledge the following individuals for their contributions to the HaimaLab project:
+We would like to acknowledge the following individuals for their contributions to the research:
 
 <table>
   <tr>
