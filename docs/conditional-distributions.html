@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="generator"
+      content="Docutils 0.18.1: http://docutils.sourceforge.net/"
+    />
+
+    <title>
+      Plotting Conditional Distributions &#8212; Mortality Prediction
+    </title>
+
+    <script data-cfasync="false">
+      document.documentElement.dataset.mode =
+        localStorage.getItem('mode') || '';
+      document.documentElement.dataset.theme =
+        localStorage.getItem('theme') || 'light';
+    </script>
+
+    <!-- Loaded before other Sphinx assets -->
+    <link
+      href="_static/styles/theme.css?digest=e353d410970836974a52"
+      rel="stylesheet"
+    />
+    <link
+      href="_static/styles/bootstrap.css?digest=e353d410970836974a52"
+      rel="stylesheet"
+    />
+    <link
+      href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52"
+      rel="stylesheet"
+    />
+
+    <link
+      href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52"
+      rel="stylesheet"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2"
+    />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link
+      rel="stylesheet"
+      href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285"
+      type="text/css"
+    />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css"
+    />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css"
+    />
+
+    <!-- Pre-loaded scripts that we'll load fully later -->
+    <link
+      rel="preload"
+      as="script"
+      href="_static/scripts/bootstrap.js?digest=e353d410970836974a52"
+    />
+    <link
+      rel="preload"
+      as="script"
+      href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"
+    />
+
+    <script
+      data-url_root="./"
+      id="documentation_options"
+      src="_static/documentation_options.js"
+    ></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>
+      let toggleHintShow = 'Click to show';
+    </script>
+    <script>
+      let toggleHintHide = 'Click to hide';
+    </script>
+    <script>
+      let toggleOpenOnPrint = 'true';
+    </script>
+    <script src="_static/togglebutton.js"></script>
+    <script>
+      var togglebuttonSelector = '.toggle, .admonition.dropdown';
+    </script>
+    <script src="_static/design-tabs.js"></script>
+    <script>
+      const THEBE_JS_URL = 'https://unpkg.com/thebe@0.8.2/lib/index.js';
+      const thebe_selector = '.thebe,.cell';
+      const thebe_selector_input = 'pre';
+      const thebe_selector_output = '.output, .cell_output';
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>
+      DOCUMENTATION_OPTIONS.pagename = 'conditional-distributions';
+    </script>
+    <link rel="shortcut icon" href="_static/favicon.png" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link
+      rel="next"
+      title="Normal Distribution Statistically Testing"
+      href="normal-distribution-testing.html"
+    />
+    <link rel="prev" title="Splitting Data" href="data-splitting.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+
+  <body
+    data-bs-spy="scroll"
+    data-bs-target=".bd-toc-nav"
+    data-offset="180"
+    data-bs-root-margin="0px 0px -60%"
+    data-default-mode=""
+  >
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <input
+      type="checkbox"
+      class="sidebar-toggle"
+      name="__primary"
+      id="__primary"
+    />
+    <label class="overlay overlay-primary" for="__primary"></label>
+
+    <input
+      type="checkbox"
+      class="sidebar-toggle"
+      name="__secondary"
+      id="__secondary"
+    />
+    <label class="overlay overlay-secondary" for="__secondary"></label>
+
+    <div class="search-button__wrapper">
+      <div class="search-button__overlay"></div>
+      <div class="search-button__search-container">
+        <form
+          class="bd-search d-flex align-items-center"
+          action="search.html"
+          method="get"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="search"
+            class="form-control"
+            name="q"
+            id="search-input"
+            placeholder="Search this book..."
+            aria-label="Search this book..."
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+          />
+          <span class="search-button__kbd-shortcut"
+            ><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span
+          >
+        </form>
+      </div>
+    </div>
+
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar"></nav>
+
+    <div class="bd-container">
+      <div class="bd-container__inner bd-page-width">
+        <div class="bd-sidebar-primary bd-sidebar">
+          <div class="sidebar-header-items sidebar-primary__section"></div>
+
+          <div class="sidebar-primary-items__start sidebar-primary__section">
+            <div class="sidebar-primary-item">
+              <a class="navbar-brand logo" href="intro.html">
+                <img
+                  src="_static/logo.png"
+                  class="logo__image only-light"
+                  alt="Logo image"
+                />
+                <script>
+                  document.write(
+                    `<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`
+                  );
+                </script>
+              </a>
+            </div>
+            script
+            <div class="sidebar-primary-item">
+              <nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+                <div class="bd-toc-item navbar-nav active">
+                  <ul class="nav bd-sidenav bd-sidenav__home-link">
+                    <li class="toctree-l1">
+                      <a class="reference internal" href="intro.html">
+                        Introduction
+                      </a>
+                    </li>
+                  </ul>
+                  <ul class="current nav bd-sidenav">
+                    <li class="toctree-l1">
+                      <a class="reference internal" href="data-description.html"
+                        >Data Description</a
+                      >
+                    </li>
+                    <li class="toctree-l1">
+                      <a
+                        class="reference internal"
+                        href="data-preparation-eda.html"
+                        >Data Preparation and EDA</a
+                      >
+                    </li>
+                    <li class="toctree-l1">
+                      <a
+                        class="reference internal"
+                        href="dealing-with-outliers.html"
+                        >Dealing with Outliers</a
+                      >
+                    </li>
+                    <li class="toctree-l1">
+                      <a
+                        class="reference internal"
+                        href="features-transformations.html"
+                        >Features Transformations</a
+                      >
+                    </li>
+                    <li class="toctree-l1">
+                      <a
+                        class="reference internal"
+                        href="categorical-visualization.html"
+                        >Visualizing Categorical Data</a
+                      >
+                    </li>
+                    <li class="toctree-l1">
+                      <a
+                        class="reference internal"
+                        href="measures-central-tendency-dispersion.html"
+                        >Calculating the Measures Of Central Tendancy and
+                        Dispersion</a
+                      >
+                    </li>
+                    <li class="toctree-l1">
+                      <a
+                        class="reference internal"
+                        href="features-standardization.html"
+                        >Features Standardization</a
+                      >
+                    </li>
+                    <li class="toctree-l1">
+                      <a class="reference internal" href="data-splitting.html"
+                        >Splitting Data</a
+                      >
+                    </li>
+                    <li class="toctree-l1 current active">
+                      <a class="current reference internal" href="#"
+                        >Plotting Conditional Distributions</a
+                      >
+                    </li>
+                    <li class="toctree-l1">
+                      <a
+                        class="reference internal"
+                        href="normal-distribution-testing.html"
+                        >Normal Distribution Statistically Testing</a
+                      >
+                    </li>
+                    <li class="toctree-l1">
+                      <a
+                        class="reference internal"
+                        href="relations-visualization.html"
+                        >Visualizing Relations Between Features</a
+                      >
+                    </li>
+                    <li class="toctree-l1">
+                      <a class="reference internal" href="machine-learning.html"
+                        >Machine Learning Model</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+            </div>
+          </div>
+
+          <div
+            class="sidebar-primary-items__end sidebar-primary__section"
+          ></div>
+
+          <div id="rtd-footer-container"></div>
+        </div>
+
+        <main id="main-content" class="bd-main">
+          <div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              <div class="bd-header-article">
+                <div class="header-article-items header-article__inner">
+                  <div class="header-article-items__start">
+                    <div class="header-article-item">
+                      <label
+                        class="sidebar-toggle primary-toggle btn btn-sm"
+                        for="__primary"
+                        title="Toggle primary sidebar"
+                        data-bs-placement="bottom"
+                        data-bs-toggle="tooltip"
+                      >
+                        <span class="fa-solid fa-bars"></span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="header-article-items__end">
+                    <div class="header-article-item">
+                      <div class="article-header-buttons">
+                        <a
+                          href="https://github.com/Bodykudo/Mortality-Prediction-Model"
+                          target="_blank"
+                          class="btn btn-sm btn-source-repository-button"
+                          title="Source repository"
+                          data-bs-placement="bottom"
+                          data-bs-toggle="tooltip"
+                        >
+                          <span class="btn__icon-container">
+                            <i class="fab fa-github"></i>
+                          </span>
+                        </a>
+
+                        <div class="dropdown dropdown-download-buttons">
+                          <button
+                            class="btn dropdown-toggle"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            aria-label="Download this page"
+                          >
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a
+                                href="_sources/conditional-distributions.ipynb"
+                                target="_blank"
+                                class="btn btn-sm btn-download-source-button dropdown-item"
+                                title="Download source file"
+                                data-bs-placement="left"
+                                data-bs-toggle="tooltip"
+                              >
+                                <span class="btn__icon-container">
+                                  <i class="fas fa-file"></i>
+                                </span>
+                                <span class="btn__text-container">.ipynb</span>
+                              </a>
+                            </li>
+
+                            <li>
+                              <button
+                                onclick="window.print()"
+                                class="btn btn-sm btn-download-pdf-button dropdown-item"
+                                title="Print to PDF"
+                                data-bs-placement="left"
+                                data-bs-toggle="tooltip"
+                              >
+                                <span class="btn__icon-container">
+                                  <i class="fas fa-file-pdf"></i>
+                                </span>
+                                <span class="btn__text-container">.pdf</span>
+                              </button>
+                            </li>
+                          </ul>
+                        </div>
+
+                        <button
+                          onclick="toggleFullScreen()"
+                          class="btn btn-sm btn-fullscreen-button"
+                          title="Fullscreen mode"
+                          data-bs-placement="bottom"
+                          data-bs-toggle="tooltip"
+                        >
+                          <span class="btn__icon-container">
+                            <i class="fas fa-expand"></i>
+                          </span>
+                        </button>
+
+                        <script>
+                          document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+                        </script>
+
+                        <script>
+                          document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+                        </script>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Plotting Conditional Distributions</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                  <div id="jb-print-toc"></div>
+                </div>
+              </div>
+
+              <div id="searchbox"></div>
+              <article class="bd-article" role="main">
+                <section
+                  class="tex2jax_ignore mathjax_ignore"
+                  id="plotting-conditional-distributions"
+                >
+                  <h1>
+                    Plotting Conditional Distributions<a
+                      class="headerlink"
+                      href="#plotting-conditional-distributions"
+                      title="Permalink to this heading"
+                      >#</a
+                    >
+                  </h1>
+                  <div class="cell docutils container">
+                    <div class="cell_input docutils container">
+                      <div class="highlight-ipython3 notranslate">
+                        <div class="highlight">
+                          <pre><span></span><span class="c1"># Importing packages we will be using</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="o">%</span><span class="k">store</span> -r transformed_data
+</pre>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cell docutils container">
+                    <div class="cell_input docutils container">
+                      <div class="highlight-ipython3 notranslate">
+                        <div class="highlight">
+                          <pre><span></span><span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">transformed_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;death&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">transformed_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">&quot;death&quot;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="cell_output docutils container">
+                      <img
+                        alt="_images/d7100a0d6abeaf6ca6fcac6c48ac8b395e6bd0fedc1d2c0912790a52f5df1b1f.png"
+                        src="_images/d7100a0d6abeaf6ca6fcac6c48ac8b395e6bd0fedc1d2c0912790a52f5df1b1f.png"
+                      />
+                      <img
+                        alt="_images/34d5c6359562166034c96979ebeb97a49b88e3b60a456bd889f9ebbf0b78e11b.png"
+                        src="_images/34d5c6359562166034c96979ebeb97a49b88e3b60a456bd889f9ebbf0b78e11b.png"
+                      />
+                      <img
+                        alt="_images/ca22b9a31c127184af3f349e4504befefa00ceec7477543d774d50fce2e49568.png"
+                        src="_images/ca22b9a31c127184af3f349e4504befefa00ceec7477543d774d50fce2e49568.png"
+                      />
+                      <img
+                        alt="_images/5a569d882a8c1433d514af8734278b0cfb802329e3562f6a7a36ce75049e3a58.png"
+                        src="_images/5a569d882a8c1433d514af8734278b0cfb802329e3562f6a7a36ce75049e3a58.png"
+                      />
+                      <img
+                        alt="_images/b27579905b1ecf6715ec48e359c31736b82fe214ace7fef94eecb61d71fc9426.png"
+                        src="_images/b27579905b1ecf6715ec48e359c31736b82fe214ace7fef94eecb61d71fc9426.png"
+                      />
+                      <img
+                        alt="_images/76ab5583f51557e80fbbd47fcee87041919c9c0ba0ad253c03ef374d8ad1bde8.png"
+                        src="_images/76ab5583f51557e80fbbd47fcee87041919c9c0ba0ad253c03ef374d8ad1bde8.png"
+                      />
+                      <img
+                        alt="_images/804613273ecb49930475f6ae2bc9beb3526946e333d7707a7b5d7253e4fecbea.png"
+                        src="_images/804613273ecb49930475f6ae2bc9beb3526946e333d7707a7b5d7253e4fecbea.png"
+                      />
+                      <img
+                        alt="_images/431b29921fc18ec73314d53afc5679f878244a0a50e8a89717025e89ff029752.png"
+                        src="_images/431b29921fc18ec73314d53afc5679f878244a0a50e8a89717025e89ff029752.png"
+                      />
+                      <img
+                        alt="_images/7c9c02045c0c65a4a324d95edac311cd0acaf909b19dfd9e2f02a3dc4d96fa9d.png"
+                        src="_images/7c9c02045c0c65a4a324d95edac311cd0acaf909b19dfd9e2f02a3dc4d96fa9d.png"
+                      />
+                      <img
+                        alt="_images/b06ffb9f2b806a18d88102f65ccaae47dd2f2f260dd712aba866f2fd57de8edf.png"
+                        src="_images/b06ffb9f2b806a18d88102f65ccaae47dd2f2f260dd712aba866f2fd57de8edf.png"
+                      />
+                      <img
+                        alt="_images/844c0540d12d8db92b2614b188436dee86d631fb0193eab253e8fe6bc27b64c7.png"
+                        src="_images/844c0540d12d8db92b2614b188436dee86d631fb0193eab253e8fe6bc27b64c7.png"
+                      />
+                      <img
+                        alt="_images/8026c66fb1e60680d1a870194ae937bebf57b656748abc64e851e80a3e235e5f.png"
+                        src="_images/8026c66fb1e60680d1a870194ae937bebf57b656748abc64e851e80a3e235e5f.png"
+                      />
+                      <img
+                        alt="_images/5231f9e67cd42dd72001328b463e8b13861e50b810dbe6842dff99448e4bdac5.png"
+                        src="_images/5231f9e67cd42dd72001328b463e8b13861e50b810dbe6842dff99448e4bdac5.png"
+                      />
+                      <img
+                        alt="_images/9a028653967c3b1ccfe2b8e618b92103eefea703ed4d7971221b7346fe636e6a.png"
+                        src="_images/9a028653967c3b1ccfe2b8e618b92103eefea703ed4d7971221b7346fe636e6a.png"
+                      />
+                      <img
+                        alt="_images/a13c336e02bc465f74f13a598aced4626f94d170860143c45ecd64569806cd6b.png"
+                        src="_images/a13c336e02bc465f74f13a598aced4626f94d170860143c45ecd64569806cd6b.png"
+                      />
+                      <img
+                        alt="_images/7a724738aa1cb3d23fd8105c2e46e90501bd0c277f983be8fa193223f40d75a3.png"
+                        src="_images/7a724738aa1cb3d23fd8105c2e46e90501bd0c277f983be8fa193223f40d75a3.png"
+                      />
+                      <img
+                        alt="_images/20499742bc49237f0972476becfde92fe569f6118722d3baec11ba86419abff7.png"
+                        src="_images/20499742bc49237f0972476becfde92fe569f6118722d3baec11ba86419abff7.png"
+                      />
+                      <img
+                        alt="_images/692df686622144971cbd126bee0cdd5d0787621daca62b7dd7231851072613cb.png"
+                        src="_images/692df686622144971cbd126bee0cdd5d0787621daca62b7dd7231851072613cb.png"
+                      />
+                    </div>
+                  </div>
+                </section>
+
+                <script type="text/x-thebe-config">
+                  {
+                      requestKernel: true,
+                      binderOptions: {
+                          repo: "binder-examples/jupyter-stacks-datascience",
+                          ref: "master",
+                      },
+                      codeMirrorConfig: {
+                          theme: "abcdef",
+                          mode: "python"
+                      },
+                      kernelOptions: {
+                          name: "python3",
+                          path: "./."
+                      },
+                      predefinedOutput: true
+                  }
+                </script>
+                <script>
+                  kernelName = 'python3';
+                </script>
+              </article>
+
+              <footer class="bd-footer-article">
+                <div class="footer-article-items footer-article__inner">
+                  <div class="footer-article-item">
+                    <!-- Previous / next buttons -->
+                    <div class="prev-next-area">
+                      <a
+                        class="left-prev"
+                        href="data-splitting.html"
+                        title="previous page"
+                      >
+                        <i class="fa-solid fa-angle-left"></i>
+                        <div class="prev-next-info">
+                          <p class="prev-next-subtitle">previous</p>
+                          <p class="prev-next-title">Splitting Data</p>
+                        </div>
+                      </a>
+                      <a
+                        class="right-next"
+                        href="normal-distribution-testing.html"
+                        title="next page"
+                      >
+                        <div class="prev-next-info">
+                          <p class="prev-next-subtitle">next</p>
+                          <p class="prev-next-title">
+                            Normal Distribution Statistically Testing
+                          </p>
+                        </div>
+                        <i class="fa-solid fa-angle-right"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </footer>
+            </div>
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner container">
+              <div class="footer-item">
+                <p class="component-author">By StatsXChange Team</p>
+              </div>
+
+              <div class="footer-item">
+                <p class="copyright">
+                  © Copyright 2023.
+                  <br />
+                </p>
+              </div>
+
+              <div class="footer-item"></div>
+
+              <div class="footer-item"></div>
+            </div>
+          </footer>
+        </main>
+      </div>
+    </div>
+
+    <!-- Scripts loaded after <body> so the DOM is not blocked -->
+    <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+    <script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+    <footer class="bd-footer"></footer>
+  </body>
+</html>

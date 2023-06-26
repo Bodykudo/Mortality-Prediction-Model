@@ -1,0 +1,1111 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Features Standardization &#8212; Mortality Prediction</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'features-standardization';</script>
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Splitting Data" href="data-splitting.html" />
+    <link rel="prev" title="Calculating the Measures Of Central Tendancy and Dispersion" href="measures-central-tendency-dispersion.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data-description.html">Data Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-preparation-eda.html">Data Preparation and EDA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dealing-with-outliers.html">Dealing with Outliers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features-transformations.html">Features Transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="categorical-visualization.html">Visualizing Categorical Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="measures-central-tendency-dispersion.html">Calculating the Measures Of Central Tendancy and Dispersion</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Features Standardization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-splitting.html">Splitting Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional-distributions.html">Plotting Conditional Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="normal-distribution-testing.html">Normal Distribution Statistically Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="relations-visualization.html">Visualizing Relations Between Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="machine-learning.html">Machine Learning Model</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/Bodykudo/Mortality-Prediction-Model" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/features-standardization.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Features Standardization</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardizing-the-transformed-data">Standardizing the Transformed Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardizing-the-original-data">Standardizing the Original Data</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="features-standardization">
+<h1>Features Standardization<a class="headerlink" href="#features-standardization" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">store</span> -r df boxcox_df quantitative_features disc
+</pre></div>
+</div>
+</div>
+</div>
+<p>Feature standardization is a preprocessing technique used to transform numerical features in a dataset to a common scale. It aims to ensure that all features contribute equally to the analysis and modeling processes by eliminating or reducing the potential bias introduced by differences in the scales or units of the features.<br />
+We will be using <strong>Standardization (Z-score normalization) method</strong><br />
+This method transforms each feature to have a mean of 0 and a standard deviation of 1. It is achieved by subtracting the mean of the feature from each value and then dividing by the standard deviation. The formula for standardization is: <span class="math notranslate nohighlight">\(X_{\text{std}} = \frac{{X - \mu}}{{\sigma}}\)</span><br />
+Where <span class="math notranslate nohighlight">\(X\)</span> represents the original value of the feature, and <span class="math notranslate nohighlight">\(\mu\)</span> represents the mean of the feature, and <span class="math notranslate nohighlight">\(\sigma\)</span> represents the standard deviation of the feature.</p>
+<section id="standardizing-the-transformed-data">
+<h2>Standardizing the Transformed Data<a class="headerlink" href="#standardizing-the-transformed-data" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s apply the standardization method to our dataframe</span>
+<span class="n">standard_df</span> <span class="o">=</span> <span class="p">(</span><span class="n">boxcox_df</span><span class="p">[</span><span class="n">quantitative_features</span><span class="p">]</span> <span class="o">-</span> <span class="n">disc</span><span class="p">[</span><span class="n">quantitative_features</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+               <span class="p">)</span> <span class="o">/</span> <span class="n">disc</span><span class="p">[</span><span class="n">quantitative_features</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span>
+<span class="c1"># Take a look at the data after standardization</span>
+<span class="n">standard_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>Diastolic BP</th>
+      <th>Poverty index</th>
+      <th>Red blood cells</th>
+      <th>Sedimentation rate</th>
+      <th>Serum Albumin</th>
+      <th>Serum Cholesterol</th>
+      <th>Serum Iron</th>
+      <th>Serum Magnesium</th>
+      <th>Serum Protein</th>
+      <th>Systolic BP</th>
+      <th>TIBC</th>
+      <th>TS</th>
+      <th>White blood cells</th>
+      <th>BMI</th>
+      <th>Pulse pressure</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>545</th>
+      <td>0.020079</td>
+      <td>-0.120171</td>
+      <td>-2.304402</td>
+      <td>0.145336</td>
+      <td>1.408720</td>
+      <td>0.023742</td>
+      <td>0.284585</td>
+      <td>-0.895537</td>
+      <td>-0.961797</td>
+      <td>2.021751</td>
+      <td>-0.444789</td>
+      <td>1.903896</td>
+      <td>-1.442828</td>
+      <td>0.516890</td>
+      <td>1.486775</td>
+      <td>-0.513445</td>
+    </tr>
+    <tr>
+      <th>547</th>
+      <td>0.610437</td>
+      <td>0.054894</td>
+      <td>-0.800596</td>
+      <td>-0.884622</td>
+      <td>0.878106</td>
+      <td>0.023742</td>
+      <td>0.734657</td>
+      <td>-0.044703</td>
+      <td>-1.041311</td>
+      <td>1.399674</td>
+      <td>0.984337</td>
+      <td>0.111204</td>
+      <td>-0.119809</td>
+      <td>-0.623719</td>
+      <td>1.768700</td>
+      <td>1.239914</td>
+    </tr>
+    <tr>
+      <th>548</th>
+      <td>1.483692</td>
+      <td>-0.120171</td>
+      <td>-1.580777</td>
+      <td>-0.003111</td>
+      <td>-0.499084</td>
+      <td>0.023742</td>
+      <td>-1.879487</td>
+      <td>1.045193</td>
+      <td>1.010789</td>
+      <td>0.971768</td>
+      <td>0.644426</td>
+      <td>-0.882278</td>
+      <td>1.452263</td>
+      <td>-2.306050</td>
+      <td>0.579790</td>
+      <td>0.921631</td>
+    </tr>
+    <tr>
+      <th>550</th>
+      <td>-0.510027</td>
+      <td>0.738768</td>
+      <td>0.202758</td>
+      <td>-0.088680</td>
+      <td>-1.195601</td>
+      <td>0.023742</td>
+      <td>0.039622</td>
+      <td>0.177887</td>
+      <td>0.932419</td>
+      <td>-0.148378</td>
+      <td>-0.444789</td>
+      <td>0.839278</td>
+      <td>-0.207920</td>
+      <td>-0.623719</td>
+      <td>0.706977</td>
+      <td>-1.391574</td>
+    </tr>
+    <tr>
+      <th>552</th>
+      <td>-0.304107</td>
+      <td>-0.565642</td>
+      <td>0.202758</td>
+      <td>-1.395850</td>
+      <td>0.564484</td>
+      <td>2.068353</td>
+      <td>-0.096904</td>
+      <td>0.455878</td>
+      <td>0.067500</td>
+      <td>-0.618300</td>
+      <td>-0.731346</td>
+      <td>1.934171</td>
+      <td>-0.397883</td>
+      <td>-0.686985</td>
+      <td>0.449038</td>
+      <td>-0.513445</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="standardizing-the-original-data">
+<h2>Standardizing the Original Data<a class="headerlink" href="#standardizing-the-original-data" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">quantitative_features</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<span class="n">stats</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>Diastolic BP</th>
+      <th>Poverty index</th>
+      <th>Red blood cells</th>
+      <th>Sedimentation rate</th>
+      <th>Serum Albumin</th>
+      <th>Serum Cholesterol</th>
+      <th>Serum Iron</th>
+      <th>Serum Magnesium</th>
+      <th>Serum Protein</th>
+      <th>Systolic BP</th>
+      <th>TIBC</th>
+      <th>TS</th>
+      <th>White blood cells</th>
+      <th>BMI</th>
+      <th>Pulse pressure</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>5384.000000</td>
+      <td>5384.000000</td>
+      <td>5384.000000</td>
+      <td>5384.000000</td>
+      <td>5384.000000</td>
+      <td>5384.000000</td>
+      <td>5384.000000</td>
+      <td>5384.000000</td>
+      <td>5384.000000</td>
+      <td>5384.000000</td>
+      <td>5384.000000</td>
+      <td>5384.000000</td>
+      <td>5384.000000</td>
+      <td>5384.000000</td>
+      <td>5384.000000</td>
+      <td>5384.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>48.320765</td>
+      <td>81.691679</td>
+      <td>254.689264</td>
+      <td>47.489413</td>
+      <td>14.307764</td>
+      <td>4.391902</td>
+      <td>217.752303</td>
+      <td>98.283804</td>
+      <td>1.681909</td>
+      <td>7.077340</td>
+      <td>130.502229</td>
+      <td>360.033247</td>
+      <td>27.758544</td>
+      <td>7.293258</td>
+      <td>25.119266</td>
+      <td>48.810550</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>15.899117</td>
+      <td>11.443893</td>
+      <td>149.687885</td>
+      <td>4.705737</td>
+      <td>9.841914</td>
+      <td>0.295683</td>
+      <td>44.254173</td>
+      <td>31.123117</td>
+      <td>0.126697</td>
+      <td>0.436487</td>
+      <td>20.397663</td>
+      <td>50.703058</td>
+      <td>9.178221</td>
+      <td>1.787862</td>
+      <td>4.219595</td>
+      <td>15.010188</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>25.000000</td>
+      <td>50.000000</td>
+      <td>2.000000</td>
+      <td>32.400000</td>
+      <td>1.000000</td>
+      <td>3.600000</td>
+      <td>94.000000</td>
+      <td>18.000000</td>
+      <td>1.330000</td>
+      <td>6.000000</td>
+      <td>80.000000</td>
+      <td>221.000000</td>
+      <td>4.300000</td>
+      <td>2.500000</td>
+      <td>14.227712</td>
+      <td>12.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>34.000000</td>
+      <td>74.000000</td>
+      <td>140.000000</td>
+      <td>44.200000</td>
+      <td>7.000000</td>
+      <td>4.200000</td>
+      <td>186.000000</td>
+      <td>76.000000</td>
+      <td>1.600000</td>
+      <td>6.800000</td>
+      <td>116.000000</td>
+      <td>324.000000</td>
+      <td>21.200000</td>
+      <td>6.000000</td>
+      <td>22.021129</td>
+      <td>38.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>46.000000</td>
+      <td>80.000000</td>
+      <td>233.000000</td>
+      <td>47.200000</td>
+      <td>12.000000</td>
+      <td>4.400000</td>
+      <td>214.000000</td>
+      <td>95.000000</td>
+      <td>1.680000</td>
+      <td>7.100000</td>
+      <td>128.000000</td>
+      <td>355.000000</td>
+      <td>27.200000</td>
+      <td>7.100000</td>
+      <td>24.729935</td>
+      <td>46.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>65.000000</td>
+      <td>90.000000</td>
+      <td>347.000000</td>
+      <td>50.500000</td>
+      <td>20.000000</td>
+      <td>4.600000</td>
+      <td>246.000000</td>
+      <td>118.000000</td>
+      <td>1.770000</td>
+      <td>7.400000</td>
+      <td>142.000000</td>
+      <td>392.000000</td>
+      <td>33.800000</td>
+      <td>8.500000</td>
+      <td>27.771702</td>
+      <td>58.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>74.000000</td>
+      <td>114.000000</td>
+      <td>714.000000</td>
+      <td>65.600000</td>
+      <td>44.000000</td>
+      <td>5.200000</td>
+      <td>342.000000</td>
+      <td>190.000000</td>
+      <td>2.040000</td>
+      <td>8.300000</td>
+      <td>190.000000</td>
+      <td>501.000000</td>
+      <td>52.800000</td>
+      <td>12.500000</td>
+      <td>37.053958</td>
+      <td>92.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">standard_original</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">quantitative_features</span><span class="p">]</span> <span class="o">-</span> <span class="n">stats</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:])</span><span class="o">/</span><span class="n">stats</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">standard_original</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>Diastolic BP</th>
+      <th>Poverty index</th>
+      <th>Red blood cells</th>
+      <th>Sedimentation rate</th>
+      <th>Serum Albumin</th>
+      <th>Serum Cholesterol</th>
+      <th>Serum Iron</th>
+      <th>Serum Magnesium</th>
+      <th>Serum Protein</th>
+      <th>Systolic BP</th>
+      <th>TIBC</th>
+      <th>TS</th>
+      <th>White blood cells</th>
+      <th>BMI</th>
+      <th>Pulse pressure</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>545</th>
+      <td>-0.083072</td>
+      <td>-0.147824</td>
+      <td>-1.534455</td>
+      <td>0.108503</td>
+      <td>1.594429</td>
+      <td>0.027388</td>
+      <td>0.231565</td>
+      <td>-0.908772</td>
+      <td>-0.962215</td>
+      <td>2.113829</td>
+      <td>-0.514874</td>
+      <td>2.089948</td>
+      <td>-1.390089</td>
+      <td>0.451233</td>
+      <td>1.582671</td>
+      <td>-0.586971</td>
+    </tr>
+    <tr>
+      <th>547</th>
+      <td>0.545894</td>
+      <td>0.026942</td>
+      <td>-0.839676</td>
+      <td>-0.890278</td>
+      <td>0.781579</td>
+      <td>0.027388</td>
+      <td>0.706096</td>
+      <td>-0.105510</td>
+      <td>-1.041144</td>
+      <td>1.426524</td>
+      <td>0.955883</td>
+      <td>0.038790</td>
+      <td>-0.169809</td>
+      <td>-0.667422</td>
+      <td>1.956085</td>
+      <td>1.278428</td>
+    </tr>
+    <tr>
+      <th>548</th>
+      <td>1.615136</td>
+      <td>-0.147824</td>
+      <td>-1.280593</td>
+      <td>-0.040252</td>
+      <td>-0.640908</td>
+      <td>0.027388</td>
+      <td>-1.732092</td>
+      <td>1.051186</td>
+      <td>1.011004</td>
+      <td>0.968321</td>
+      <td>0.563681</td>
+      <td>-0.888176</td>
+      <td>1.508076</td>
+      <td>-1.953875</td>
+      <td>0.507326</td>
+      <td>0.878700</td>
+    </tr>
+    <tr>
+      <th>550</th>
+      <td>-0.586244</td>
+      <td>0.726005</td>
+      <td>0.022118</td>
+      <td>-0.125254</td>
+      <td>-1.047333</td>
+      <td>0.027388</td>
+      <td>-0.017000</td>
+      <td>0.119403</td>
+      <td>0.932075</td>
+      <td>-0.177188</td>
+      <td>-0.514874</td>
+      <td>0.807974</td>
+      <td>-0.256972</td>
+      <td>-0.667422</td>
+      <td>0.647354</td>
+      <td>-1.253186</td>
+    </tr>
+    <tr>
+      <th>552</th>
+      <td>-0.397554</td>
+      <td>-0.584738</td>
+      <td>0.022118</td>
+      <td>-1.357792</td>
+      <td>0.375154</td>
+      <td>2.056589</td>
+      <td>-0.152580</td>
+      <td>0.408577</td>
+      <td>0.063858</td>
+      <td>-0.635391</td>
+      <td>-0.760000</td>
+      <td>2.129393</td>
+      <td>-0.442193</td>
+      <td>-0.723355</td>
+      <td>0.366784</td>
+      <td>-0.586971</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>8573</th>
+      <td>-1.215210</td>
+      <td>-0.672121</td>
+      <td>0.643410</td>
+      <td>0.724772</td>
+      <td>0.375154</td>
+      <td>0.365588</td>
+      <td>-0.376288</td>
+      <td>-2.226120</td>
+      <td>-0.567572</td>
+      <td>1.884728</td>
+      <td>-0.809025</td>
+      <td>0.176848</td>
+      <td>-2.163659</td>
+      <td>-0.331825</td>
+      <td>0.166999</td>
+      <td>-0.586971</td>
+    </tr>
+    <tr>
+      <th>8574</th>
+      <td>-1.403900</td>
+      <td>-0.497355</td>
+      <td>1.578690</td>
+      <td>-0.189006</td>
+      <td>-0.539302</td>
+      <td>1.041988</td>
+      <td>-1.824739</td>
+      <td>-0.266162</td>
+      <td>-2.304004</td>
+      <td>0.739219</td>
+      <td>-1.299278</td>
+      <td>-0.868453</td>
+      <td>0.080784</td>
+      <td>1.905484</td>
+      <td>-0.865121</td>
+      <td>-1.386428</td>
+    </tr>
+    <tr>
+      <th>8575</th>
+      <td>1.300653</td>
+      <td>0.026942</td>
+      <td>0.409591</td>
+      <td>0.108503</td>
+      <td>0.375154</td>
+      <td>1.041988</td>
+      <td>1.881126</td>
+      <td>-0.009119</td>
+      <td>2.668508</td>
+      <td>-0.864493</td>
+      <td>-0.024622</td>
+      <td>-0.513445</td>
+      <td>0.167947</td>
+      <td>-0.108094</td>
+      <td>-0.480861</td>
+      <td>-0.054000</td>
+    </tr>
+    <tr>
+      <th>8576</th>
+      <td>-0.900727</td>
+      <td>-0.147824</td>
+      <td>-0.452203</td>
+      <td>-0.040252</td>
+      <td>-0.437696</td>
+      <td>0.365588</td>
+      <td>-1.282417</td>
+      <td>-0.105510</td>
+      <td>-1.120073</td>
+      <td>-0.406290</td>
+      <td>-1.005126</td>
+      <td>0.413520</td>
+      <td>-0.311449</td>
+      <td>-1.058951</td>
+      <td>0.160777</td>
+      <td>-1.253186</td>
+    </tr>
+    <tr>
+      <th>8578</th>
+      <td>1.363550</td>
+      <td>-1.021652</td>
+      <td>-0.338633</td>
+      <td>0.278508</td>
+      <td>-0.539302</td>
+      <td>0.027388</td>
+      <td>-0.288160</td>
+      <td>0.826273</td>
+      <td>1.800291</td>
+      <td>-0.635391</td>
+      <td>0.073429</td>
+      <td>0.748806</td>
+      <td>0.374959</td>
+      <td>0.115637</td>
+      <td>0.863552</td>
+      <td>0.878700</td>
+    </tr>
+  </tbody>
+</table>
+<p>5384 rows × 16 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">store</span> standard_df
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Stored &#39;standard_df&#39; (DataFrame)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="measures-central-tendency-dispersion.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Calculating the Measures Of Central Tendancy and Dispersion</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="data-splitting.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Splitting Data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardizing-the-transformed-data">Standardizing the Transformed Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardizing-the-original-data">Standardizing the Original Data</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By StatsXChange Team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

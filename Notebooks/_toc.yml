@@ -1,0 +1,18 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+chapters:
+  - file: data-description
+  - file: data-preparation-eda
+  - file: dealing-with-outliers
+  - file: features-transformations
+  - file: categorical-visualization
+  - file: measures-central-tendency-dispersion
+  - file: features-standardization
+  - file: data-splitting
+  - file: conditional-distributions
+  - file: normal-distribution-testing
+  - file: relations-visualization
+  - file: machine-learning
